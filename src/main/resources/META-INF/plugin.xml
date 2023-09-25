@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.nurech.macrorifyplugin</id>
-    <name>macrorify-Template</name>
+    <id>com.github.nurech.macrorifyplugin.language</id>
+    <name>SimpleFileType</name>
     <vendor>nurech</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -11,11 +11,11 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.nurech.macrorifyplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         <fileType
-                name="Simple File"
                 implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFileType"
+                name="Macrorify"
                 fieldName="INSTANCE"
-                language="Simple"
-                extensions="simple"/>
+                language="Macrorify"
+                extensions="macrorify"/>
     </extensions>
 
     <applicationListeners>

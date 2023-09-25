@@ -17,7 +17,7 @@ public class SimpleFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getName() {
-        return "Simple File";
+        return "Macrorify";
     }
 
     @NotNull
@@ -29,7 +29,7 @@ public class SimpleFileType extends LanguageFileType {
     @NotNull
     @Override
     public String getDefaultExtension() {
-        return "simple";
+        return "macrorify";
     }
 
     @Nullable
