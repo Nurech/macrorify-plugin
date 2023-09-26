@@ -1,14 +1,14 @@
+// Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
+
 package com.github.nurech.macrorifyplugin.language;
 
-import com.github.nurech.macrorifyplugin.language.SimpleLanguage;
-import com.github.nurech.macrorifyplugin.language.SimpleLexerAdapter;
-import com.github.nurech.macrorifyplugin.language.parser.SimpleParser;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleFile;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTokenSets;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTypes;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;
 import com.intellij.lang.PsiParser;
+import com.intellij.lexer.Lexer;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.FileViewProvider;
 import com.intellij.psi.PsiElement;
@@ -23,7 +23,7 @@ public class SimpleParserDefinition implements ParserDefinition {
 
   @NotNull
   @Override
-  public SimpleLexerAdapter createLexer(Project project) {
+  public Lexer createLexer(Project project) {
     return new SimpleLexerAdapter();
   }
 

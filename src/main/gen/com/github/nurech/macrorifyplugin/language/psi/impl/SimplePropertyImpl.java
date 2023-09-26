@@ -8,10 +8,10 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.nurech.macrorifyplugin.language.psi.SimpleTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.nurech.macrorifyplugin.language.psi.*;
+import com.intellij.navigation.ItemPresentation;
 
-public class SimplePropertyImpl extends ASTWrapperPsiElement implements SimpleProperty {
+public class SimplePropertyImpl extends SimpleNamedElementImpl implements SimpleProperty {
 
   public SimplePropertyImpl(@NotNull ASTNode node) {
     super(node);
@@ -25,6 +25,36 @@ public class SimplePropertyImpl extends ASTWrapperPsiElement implements SimplePr
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SimpleVisitor) accept((SimpleVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  public String getKey() {
+    return SimplePsiImplUtil.getKey(this);
+  }
+
+  @Override
+  public String getValue() {
+    return SimplePsiImplUtil.getValue(this);
+  }
+
+  @Override
+  public String getName() {
+    return SimplePsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return SimplePsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return SimplePsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public ItemPresentation getPresentation() {
+    return SimplePsiImplUtil.getPresentation(this);
   }
 
 }

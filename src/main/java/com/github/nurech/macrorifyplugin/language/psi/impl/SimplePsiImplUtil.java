@@ -1,8 +1,17 @@
+// Copyright 2000-2023 JetBrains s.r.o. and contributors. Use of this source code is governed by the Apache 2.0 license.
+
 package com.github.nurech.macrorifyplugin.language.psi.impl;
 
+import com.github.nurech.macrorifyplugin.language.psi.SimpleElementFactory;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleProperty;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTypes;
 import com.intellij.lang.ASTNode;
+import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 public class SimplePsiImplUtil {
 
@@ -23,6 +32,51 @@ public class SimplePsiImplUtil {
     } else {
       return null;
     }
+  }
+
+  public static String getName(SimpleProperty element) {
+    return getKey(element);
+  }
+
+  public static PsiElement setName(SimpleProperty element, String newName) {
+    ASTNode keyNode = element.getNode().findChildByType(SimpleTypes.KEY);
+    if (keyNode != null) {
+      SimpleProperty property = SimpleElementFactory.createProperty(element.getProject(), newName);
+      ASTNode newKeyNode = property.getFirstChild().getNode();
+      element.getNode().replaceChild(keyNode, newKeyNode);
+    }
+    return element;
+  }
+
+  public static PsiElement getNameIdentifier(SimpleProperty element) {
+    ASTNode keyNode = element.getNode().findChildByType(SimpleTypes.KEY);
+    if (keyNode != null) {
+      return keyNode.getPsi();
+    } else {
+      return null;
+    }
+  }
+
+  public static ItemPresentation getPresentation(final SimpleProperty element) {
+    return new ItemPresentation() {
+      @Nullable
+      @Override
+      public String getPresentableText() {
+        return element.getKey();
+      }
+
+      @Nullable
+      @Override
+      public String getLocationString() {
+        PsiFile containingFile = element.getContainingFile();
+        return containingFile == null ? null : containingFile.getName();
+      }
+
+      @Override
+      public Icon getIcon(boolean unused) {
+        return element.getIcon(0);
+      }
+    };
   }
 
 }
