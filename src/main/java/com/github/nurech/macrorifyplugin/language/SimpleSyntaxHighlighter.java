@@ -1,4 +1,4 @@
-package com.github.nurech.macrorifyplugin.language.color;
+package com.github.nurech.macrorifyplugin.language;
 
 import com.github.nurech.macrorifyplugin.language.SimpleLexerAdapter;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTypes;

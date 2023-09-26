@@ -18,10 +18,10 @@
                 extensions="macrorify"/>
         <lang.parserDefinition
                 language="Macrorify"
-                implementationClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParserDefinition"/>
+                implementationClass="com.github.nurech.macrorifyplugin.language.SimpleParserDefinition"/>
         <lang.syntaxHighlighterFactory
                 language="Macrorify"
-                implementationClass="com.github.nurech.macrorifyplugin.language.color.SimpleSyntaxHighlighterFactory"/>
+                implementationClass="com.github.nurech.macrorifyplugin.language.SimpleSyntaxHighlighterFactory"/>
 
     </extensions>
 

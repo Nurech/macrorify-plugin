@@ -1,6 +1,6 @@
 {
-  parserClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParser"
-  parserUtilClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParserUtil"
+  parserClass="com.github.nurech.macrorifyplugin.language.SimpleParser"
+  parserUtilClass="com.github.nurech.macrorifyplugin.language.SimpleParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 
@@ -12,10 +12,16 @@
   elementTypeHolderClass="com.github.nurech.macrorifyplugin.language.psi.SimpleTypes"
   elementTypeClass="com.github.nurech.macrorifyplugin.language.psi.SimpleElementType"
   tokenTypeClass="com.github.nurech.macrorifyplugin.language.psi.SimpleTokenType"
+
+   psiImplUtilClass="com.github.nurech.macrorifyplugin.language.psi.impl.SimplePsiImplUtil"
 }
+
 
 simpleFile ::= item_*
 
 private item_ ::= (property|COMMENT|CRLF)
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY
+{
+  methods=[getKey getValue]
+}

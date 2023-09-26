@@ -1,4 +1,4 @@
-package com.github.nurech.macrorifyplugin.language.color;
+package com.github.nurech.macrorifyplugin.language;
 
 import com.intellij.openapi.fileTypes.SyntaxHighlighter;
 import com.intellij.openapi.fileTypes.SyntaxHighlighterFactory;

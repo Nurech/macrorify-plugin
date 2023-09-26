@@ -25,7 +25,7 @@ grammarKit {
 val generateMacrorifyParser = tasks.create<GenerateParserTask>("generateMacrorifyParser") {
     sourceFile.set(file("$projectDir/src/main/java/com/github/nurech/macrorifyplugin/language/Simple.bnf"))
     targetRoot.set("$projectDir/src/main/gen")
-    pathToParser.set("com/github/nurech/macrorifyplugin/language/parser/SimpleParser.java")
+    pathToParser.set("com/github/nurech/macrorifyplugin/language/SimpleParser.java")
     pathToPsiRoot.set("com/github/nurech/macrorifyplugin/language/psi")
     purgeOldFiles.set(true)
 }

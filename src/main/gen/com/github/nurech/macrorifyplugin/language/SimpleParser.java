@@ -1,10 +1,10 @@
 // This is a generated file. Not intended for manual editing.
-package com.github.nurech.macrorifyplugin.language.parser;
+package com.github.nurech.macrorifyplugin.language;
 
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
 import static com.github.nurech.macrorifyplugin.language.psi.SimpleTypes.*;
-import static com.github.nurech.macrorifyplugin.language.parser.SimpleParserUtil.*;
+import static com.github.nurech.macrorifyplugin.language.SimpleParserUtil.*;
 import com.intellij.psi.tree.IElementType;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.tree.TokenSet;
