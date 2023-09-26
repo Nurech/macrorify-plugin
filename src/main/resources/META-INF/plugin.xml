@@ -1,7 +1,7 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.nurech.macrorifyplugin</id>
-    <name>macrorify-plugin Template</name>
+    <id>com.github.nurech.macrorifyplugin.language</id>
+    <name>SimpleFileType</name>
     <vendor>nurech</vendor>
 
     <depends>com.intellij.modules.platform</depends>
@@ -10,9 +10,31 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.nurech.macrorifyplugin.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <fileType implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFileType" name="Macrorify" fieldName="INSTANCE" language="Macrorify" extensions="macrorify"/>
+        <lang.parserDefinition language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleSyntaxHighlighterFactory"/>
+        <iconProvider implementation="com.github.nurech.macrorifyplugin.language.SimplePropertyIconProvider"/>
+        <colorSettingsPage implementation="com.github.nurech.macrorifyplugin.language.SimpleColorSettingsPage"/>
+        <annotator language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleAnnotator"/>
+        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleLineMarkerProvider"/>
+        <completion.contributor language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCompletionContributor"/>
+        <psi.referenceContributor language="JAVA" implementation="com.github.nurech.macrorifyplugin.language.SimpleReferenceContributor"/>
+        <lang.refactoringSupport language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleRefactoringSupportProvider"/>
+        <lang.findUsagesProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFindUsagesProvider"/>
+        <lang.foldingBuilder language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFoldingBuilder"/>
+        <gotoSymbolContributor implementation="com.github.nurech.macrorifyplugin.language.SimpleChooseByNameContributor"/>
+        <lang.psiStructureViewFactory language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleStructureViewFactory"/>
+        <navbar implementation="com.github.nurech.macrorifyplugin.language.SimpleStructureAwareNavbar"/>
+        <lang.formatter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFormattingModelBuilder"/>
+        <codeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleCodeStyleSettingsProvider"/>
+        <langCodeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleLanguageCodeStyleSettingsProvider"/>
+        <lang.commenter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCommenter"/>
+        <lang.documentationProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleDocumentationProvider"/>
+        <spellchecker.support language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleSpellcheckingStrategy"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="com.github.nurech.macrorifyplugin.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
+        <listener class="com.github.nurech.macrorifyplugin.listeners.MyApplicationActivationListener"
+                  topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
 </idea-plugin>

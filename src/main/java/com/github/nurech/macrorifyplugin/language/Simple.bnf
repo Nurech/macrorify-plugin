@@ -1,0 +1,34 @@
+{
+  parserClass="com.github.nurech.macrorifyplugin.language.SimpleParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Simple"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.nurech.macrorifyplugin.language.psi"
+  psiImplPackage="com.github.nurech.macrorifyplugin.language.psi.impl"
+
+  elementTypeHolderClass="com.github.nurech.macrorifyplugin.language.psi.SimpleTypes"
+  elementTypeClass="com.github.nurech.macrorifyplugin.language.psi.SimpleElementType"
+  tokenTypeClass="com.github.nurech.macrorifyplugin.language.psi.SimpleTokenType"
+
+   psiImplUtilClass="com.github.nurech.macrorifyplugin.language.psi.impl.SimplePsiImplUtil"
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF|function)
+
+function ::= FUNCTION {
+  pin=1
+}
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY {
+  pin=3
+  recoverWhile="recover_property"
+  mixin="com.github.nurech.macrorifyplugin.language.psi.impl.SimpleNamedElementImpl"
+  implements="com.github.nurech.macrorifyplugin.language.psi.SimpleNamedElement"
+  methods=[getKey getValue getName setName getNameIdentifier getPresentation]
+}
+
+private recover_property ::= !(KEY|SEPARATOR|COMMENT)

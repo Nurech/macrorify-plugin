@@ -1,17 +1,57 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
+import org.jetbrains.grammarkit.tasks.GenerateLexerTask
+import org.jetbrains.grammarkit.tasks.GenerateParserTask
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
 
 plugins {
-    id("java") // Java support
-    alias(libs.plugins.kotlin) // Kotlin support
-    alias(libs.plugins.gradleIntelliJPlugin) // Gradle IntelliJ Plugin
-    alias(libs.plugins.changelog) // Gradle Changelog Plugin
-    alias(libs.plugins.qodana) // Gradle Qodana Plugin
-    alias(libs.plugins.kover) // Gradle Kover Plugin
+    id("java")
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.gradleIntelliJPlugin)
+    alias(libs.plugins.changelog)
+    alias(libs.plugins.qodana)
+    alias(libs.plugins.kover)
+    id("org.jetbrains.grammarkit") version "2022.3.2"
 }
+
+grammarKit {
+    jflexRelease.set("1.9.1")
+    grammarKitRelease.set("2021.1.2")
+    intellijRelease.set("203.7717.81")
+}
+
+val generateMacrorifyParser = tasks.create<GenerateParserTask>("generateMacrorifyParser") {
+    sourceFile.set(file("$projectDir/src/main/java/com/github/nurech/macrorifyplugin/language/Simple.bnf"))
+    targetRoot.set("$projectDir/src/main/gen")
+    pathToParser.set("com/github/nurech/macrorifyplugin/language/SimpleParser.java")
+    pathToPsiRoot.set("com/github/nurech/macrorifyplugin/language/psi")
+    purgeOldFiles.set(true)
+}
+
+val generateMacrorifyLexer = tasks.create<GenerateLexerTask>("generateMacrorifyLexer") {
+    sourceFile.set(file("$projectDir/src/main/java/com/github/nurech/macrorifyplugin/language/Simple.flex"))
+    skeleton.set(file("$projectDir/idea-flex.skeleton"))
+    targetDir.set("$projectDir/src/main/gen/com/github/nurech/macrorifyplugin/language")
+    targetClass.set("_RpmSpecLexer")
+    purgeOldFiles.set(true)
+}
+
+val generateGrammars: TaskProvider<Task> = tasks.register("generateMacrorifyGrammars") {
+    group = "grammarkit"
+    dependsOn("generateMacrorifyParser", "generateMacrorifyLexer")
+
+    doLast {
+        println("All grammarkit related tasks are executed.")
+    }
+}
+
+//tasks.withType<KotlinCompile> {
+//    dependsOn(generateGrammars)
+//}
+
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 group = properties("pluginGroup").get()
 version = properties("pluginVersion").get()
@@ -23,7 +63,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-//    implementation(libs.annotations)
+    implementation(libs.annotations)
 }
 
 // Set the JVM language level used to build the project. Use Java 11 for 2020.3+, and Java 17 for 2022.2+.
@@ -79,7 +119,7 @@ tasks {
             val start = "<!-- Plugin description -->"
             val end = "<!-- Plugin description end -->"
 
-            with (it.lines()) {
+            with(it.lines()) {
                 if (!containsAll(listOf(start, end))) {
                     throw GradleException("Plugin description section not found in README.md:\n$start ... $end")
                 }
@@ -92,10 +132,10 @@ tasks {
         changeNotes = properties("pluginVersion").map { pluginVersion ->
             with(changelog) {
                 renderItem(
-                    (getOrNull(pluginVersion) ?: getUnreleased())
-                        .withHeader(false)
-                        .withEmptySections(false),
-                    Changelog.OutputType.HTML,
+                        (getOrNull(pluginVersion) ?: getUnreleased())
+                                .withHeader(false)
+                                .withEmptySections(false),
+                        Changelog.OutputType.HTML,
                 )
             }
         }
