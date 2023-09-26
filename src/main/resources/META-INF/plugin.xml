@@ -16,6 +16,13 @@
                 fieldName="INSTANCE"
                 language="Macrorify"
                 extensions="macrorify"/>
+        <lang.parserDefinition
+                language="Macrorify"
+                implementationClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParserDefinition"/>
+        <lang.syntaxHighlighterFactory
+                language="Macrorify"
+                implementationClass="com.github.nurech.macrorifyplugin.language.color.SimpleSyntaxHighlighterFactory"/>
+
     </extensions>
 
     <applicationListeners>
