@@ -1,9 +1,7 @@
 // Copyright 2000-2022 JetBrains s.r.o. and other contributors. Use of this source code is governed by the Apache 2.0 license that can be found in the LICENSE file.
 package com.github.nurech.macrorifyplugin.language;
 
-import com.intellij.lexer.FlexLexer;
 import com.intellij.psi.tree.IElementType;
-import com.github.nurech.macrorifyplugin.language.psi.SimpleTypes;
 import com.intellij.psi.TokenType;
 
 %%
@@ -23,7 +21,7 @@ VALUE_CHARACTER=[^\n\f\\] | "\\"{CRLF} | "\\".
 END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
 SEPARATOR=[:=]
 KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
-SIMPLE_FUNCTION="fun"
+FUNCTION="fun"
 
 %state WAITING_VALUE
 
@@ -37,4 +35,4 @@ SIMPLE_FUNCTION="fun"
 <WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 ({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 [^]                                                         { return TokenType.BAD_CHARACTER; }
-<YYINITIAL> {SIMPLE_FUNCTION}                               { yybegin(YYINITIAL); return SimpleTypes.SIMPLE_FUNCTION; }
+<YYINITIAL> {FUNCTION}                                      { yybegin(YYINITIAL); return SimpleTypes.FUNCTION; }

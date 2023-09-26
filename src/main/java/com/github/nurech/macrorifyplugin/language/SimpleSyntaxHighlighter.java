@@ -21,16 +21,13 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
   public static final TextAttributesKey VALUE = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING);
   public static final TextAttributesKey COMMENT = createTextAttributesKey("SIMPLE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
   public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
-  public static final TextAttributesKey SIMPLE_FUNCTION = createTextAttributesKey("SIMPLE_FUNCTION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
-
-
   private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
   private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
   private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
   private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
   private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
   private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
-  private static final TextAttributesKey[] SIMPLE_FUNCTION_KEYS = new TextAttributesKey[]{SIMPLE_FUNCTION};
+  public static final TextAttributesKey FUNCTION = TextAttributesKey.createTextAttributesKey("SIMPLE_FUNCTION", DefaultLanguageHighlighterColors.FUNCTION_DECLARATION);
 
   @NotNull
   @Override
@@ -55,7 +52,9 @@ public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
     if (tokenType.equals(TokenType.BAD_CHARACTER)) {
       return BAD_CHAR_KEYS;
     }
-
+    if (tokenType.equals(SimpleTypes.FUNCTION)) {
+      return pack(FUNCTION);
+    }
     return EMPTY_KEYS;
   }
 

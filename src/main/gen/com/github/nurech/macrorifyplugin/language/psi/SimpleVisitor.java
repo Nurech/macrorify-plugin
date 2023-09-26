@@ -7,6 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public class SimpleVisitor extends PsiElementVisitor {
 
+  public void visitFunction(@NotNull SimpleFunction o) {
+    visitPsiElement(o);
+  }
+
   public void visitProperty(@NotNull SimpleProperty o) {
     visitNamedElement(o);
   }

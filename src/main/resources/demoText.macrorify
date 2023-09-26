@@ -1,0 +1,132 @@
+// This section is a little different
+// Everything will be in this code box
+
+// When you learn new programing language
+// All you need is these things and it applies to any language be it functional or OOP:
+// Data Type, How to declare variable, Data Structure, Compound Statement (Branching Statement, Control Flow Statement, Function, Class)
+// EMScript is dynamically typed functional language with some OOP features. Though most of the built-in library use OOP
+
+
+// 1.Data Type
+// - Primitive Type:
+//  + number: 0, 1, 2.3, -4.5...
+//  + string: "the usual string syntax\nthis is new line"
+//  + bool: true false
+//  + special: null
+// - Reference Type:
+//  + Array: [1, 3, 5, 6, "hello", true, null]
+//  + Function: fun doSomething() {  }
+//  + Object: class A { }
+
+// 2. How to declare variable
+// Use the keyword "var" similar to javascript.
+// Variable does not automatically hoist to the top, you must declare before using
+var width = 100
+var image = "Cat Piture"
+
+// 3. Data Structure
+// Currently we only have Array. If you need more like a Map or something, feel free to feature-request
+var collection = [1, 2, 4, 5]
+collection.push(7) //[1, 2, 4, 5, 7]
+var a = collection[2] //get
+collection[3] = 10 //set
+
+// 4. Compound Statement - Branching
+// Currently we only have if-else. If you need more like a switch or when, feel free to feature-request
+if (condition) {
+
+} else if (condition) {
+
+} else {
+
+}
+
+// As of 1.4.3+ you can use ternari operator
+var a = condition ? 1 : 0
+
+// 4. Compound Statement - Control Flow
+// - for loop
+for (var i = 0; i < collection.size; i = i + 1) {
+    var current  = collection[i];
+    Con.out(current)
+}
+
+// - while loop
+var i = 0
+while(i < 10) {
+    Con.out(i)
+    i = i + 1
+}
+
+// - do while loop
+var i = 0
+do {
+    Con.out(i)
+    i = i + 1
+} while (i < 10)
+
+// As of 1.4.3+ you can use foreach syntax
+var array = [1, 2, 3, 4, 5]
+for (var item : array) {
+    // do something to every item
+}
+
+// 5. Compound Statement - Function
+// Declare function with "fun" keyword
+fun add(a, b) {
+    return a + b
+}
+
+// Call like normal
+add(1, 1) //3
+
+// Function is first class citizen so you can use them as argument
+fun addAsterisk(text) {
+    return "***" + text + "***"
+}
+
+fun print(text, format) {
+    var value = text
+    if (format)
+        value = format(text)
+
+    Con.out(value)
+}
+
+print("Hello", addAsterisk)
+
+// As of 1.4.3+, you can now use lambda syntax to create an anonymous function
+fun print(text, text => "***" + text + "***") {
+    // Same as above
+}
+
+// 6. Compound Statement - Class
+// Use "class" keyword
+class Addition {
+    //constructor
+    init(a, b) {
+        this.a = a
+        this.b = b
+    }
+
+    //fields
+    a
+    b
+
+    //methods
+    add() {
+        return this.a + this.b
+    }
+
+    //static field
+    static add(a, b) {
+        return a + b
+    }
+}
+
+// "new" is optional
+var a = new Addition(2, 3)
+a.add() //5
+
+// access static by class declaration
+Addition.add(2, 3) //5

@@ -36,7 +36,19 @@ public class SimpleParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // property|COMMENT|CRLF
+  // FUNCTION
+  public static boolean function(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "function")) return false;
+    if (!nextTokenIs(b, FUNCTION)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, FUNCTION);
+    exit_section_(b, m, FUNCTION, r);
+    return r;
+  }
+
+  /* ********************************************************** */
+  // property|COMMENT|CRLF|function
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
@@ -44,6 +56,7 @@ public class SimpleParser implements PsiParser, LightPsiParser {
     r = property(b, l + 1);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
+    if (!r) r = function(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
