@@ -2,7 +2,6 @@ import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.grammarkit.tasks.GenerateLexerTask
 import org.jetbrains.grammarkit.tasks.GenerateParserTask
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 fun properties(key: String) = providers.gradleProperty(key)
 fun environment(key: String) = providers.environmentVariable(key)
@@ -18,7 +17,7 @@ plugins {
 }
 
 grammarKit {
-    jflexRelease.set("1.7.0-1")
+    jflexRelease.set("1.9.1")
     grammarKitRelease.set("2021.1.2")
     intellijRelease.set("203.7717.81")
 }
@@ -26,22 +25,22 @@ grammarKit {
 val generateMacrorifyParser = tasks.create<GenerateParserTask>("generateMacrorifyParser") {
     sourceFile.set(file("$projectDir/src/main/java/com/github/nurech/macrorifyplugin/language/Simple.bnf"))
     targetRoot.set("$projectDir/src/main/gen")
-    pathToParser.set("com/github/nurech/macrorifyplugin/language/SimpleParserDefinition.java")
+    pathToParser.set("com/github/nurech/macrorifyplugin/language/parser/SimpleParser.java")
     pathToPsiRoot.set("com/github/nurech/macrorifyplugin/language/psi")
     purgeOldFiles.set(true)
 }
 
 val generateMacrorifyLexer = tasks.create<GenerateLexerTask>("generateMacrorifyLexer") {
     sourceFile.set(file("$projectDir/src/main/java/com/github/nurech/macrorifyplugin/language/Simple.flex"))
-    skeleton.set(file("$projectDir/src/main/grammars/idea-flex.skeleton"))
-    targetDir.set("$projectDir/src/main/java/com/github/nurech/macrorifyplugin")
+    skeleton.set(file("$projectDir/idea-flex.skeleton"))
+    targetDir.set("$projectDir/src/main/gen/com/github/nurech/macrorifyplugin/language")
     targetClass.set("_RpmSpecLexer")
     purgeOldFiles.set(true)
 }
 
 val generateGrammars: TaskProvider<Task> = tasks.register("generateMacrorifyGrammars") {
     group = "grammarkit"
-    dependsOn("generateMacrorifyLexer", "generateMacrorifyParser")
+    dependsOn("generateMacrorifyParser", "generateMacrorifyLexer")
 
     doLast {
         println("All grammarkit related tasks are executed.")

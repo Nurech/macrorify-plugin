@@ -1,5 +1,6 @@
 {
   parserClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParser"
+  parserUtilClass="com.github.nurech.macrorifyplugin.language.parser.SimpleParserUtil"
 
   extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
 

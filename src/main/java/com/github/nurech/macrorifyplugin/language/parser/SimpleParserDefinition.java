@@ -2,7 +2,6 @@ package com.github.nurech.macrorifyplugin.language.parser;
 
 import com.github.nurech.macrorifyplugin.language.SimpleLanguage;
 import com.github.nurech.macrorifyplugin.language.SimpleLexerAdapter;
-import com.github.nurech.macrorifyplugin.language.parser.SimpleParser;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleFile;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTokenSets;
 import com.github.nurech.macrorifyplugin.language.psi.SimpleTypes;
