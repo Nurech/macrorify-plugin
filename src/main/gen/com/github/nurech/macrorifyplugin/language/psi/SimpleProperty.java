@@ -4,15 +4,20 @@ package com.github.nurech.macrorifyplugin.language.psi;
 import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
 
-public interface SimpleProperty extends PsiElement {
+public interface SimpleProperty extends SimpleNamedElement {
 
-  //WARNING: getKey(...) is skipped
-  //matching getKey(SimpleProperty, ...)
-  //methods are not found in SimplePsiImplUtil
+  String getKey();
 
-  //WARNING: getValue(...) is skipped
-  //matching getValue(SimpleProperty, ...)
-  //methods are not found in SimplePsiImplUtil
+  String getValue();
+
+  String getName();
+
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
+
+  ItemPresentation getPresentation();
 
 }
