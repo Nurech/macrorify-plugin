@@ -17,9 +17,9 @@
 
 simpleFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF|function)
+private item_ ::= (property|COMMENT|CRLF|functionDeclaration)
 
-function ::= FUNCTION {
+functionDeclaration ::= FUNCTION IDENTIFIER {
   pin=1
 }
 

@@ -22,11 +22,14 @@ END_OF_LINE_COMMENT=("#"|"!")[^\r\n]*
 SEPARATOR=[:=]
 KEY_CHARACTER=[^:=\ \n\t\f\\] | "\\ "
 FUNCTION="fun"
+IDENTIFIER=[a-zA-Z_][a-zA-Z0-9_]*
+
 
 %state WAITING_VALUE
 
 %%
-
+<YYINITIAL> {IDENTIFIER}                                    { yybegin(YYINITIAL); return SimpleTypes.IDENTIFIER; }
+<YYINITIAL> {FUNCTION}                                      { yybegin(YYINITIAL); return SimpleTypes.FUNCTION_KEYWORD; }
 <YYINITIAL> {END_OF_LINE_COMMENT}                           { yybegin(YYINITIAL); return SimpleTypes.COMMENT; }
 <YYINITIAL> {KEY_CHARACTER}+                                { yybegin(YYINITIAL); return SimpleTypes.KEY; }
 <YYINITIAL> {SEPARATOR}                                     { yybegin(WAITING_VALUE); return SimpleTypes.SEPARATOR; }
@@ -35,4 +38,3 @@ FUNCTION="fun"
 <WAITING_VALUE> {FIRST_VALUE_CHARACTER}{VALUE_CHARACTER}*   { yybegin(YYINITIAL); return SimpleTypes.VALUE; }
 ({CRLF}|{WHITE_SPACE})+                                     { yybegin(YYINITIAL); return TokenType.WHITE_SPACE; }
 [^]                                                         { return TokenType.BAD_CHARACTER; }
-<YYINITIAL> {FUNCTION}                                      { yybegin(YYINITIAL); return SimpleTypes.FUNCTION; }
