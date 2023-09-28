@@ -61,7 +61,7 @@ public class SimpleAnnotator implements Annotator {
     } else {
       // Found at least one property, force the text attributes to Simple syntax value character
       holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
-          .range(keyRange).textAttributes(SimpleSyntaxHighlighter.VALUE).create();
+          .range(keyRange).textAttributes(SimpleSyntaxHighlighter.STRING).create();
     }
   }
 

@@ -36,28 +36,23 @@ public class SimpleParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // FUNCTION IDENTIFIER
-  public static boolean functionDeclaration(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "functionDeclaration")) return false;
-    if (!nextTokenIs(b, FUNCTION)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, FUNCTION_DECLARATION, null);
-    r = consumeTokens(b, 1, FUNCTION, IDENTIFIER);
-    p = r; // pin = 1
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
-  }
-
-  /* ********************************************************** */
-  // property|COMMENT|CRLF|functionDeclaration
+  // var_declaration | property | KEYWORD | COMMENT | CRLF | STRING | BOOLEAN | NUMBER | IDENTIFIER | KEY | OPERATOR | SEMICOLON
   static boolean item_(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "item_")) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = property(b, l + 1);
+    r = var_declaration(b, l + 1);
+    if (!r) r = property(b, l + 1);
+    if (!r) r = consumeToken(b, KEYWORD);
     if (!r) r = consumeToken(b, COMMENT);
     if (!r) r = consumeToken(b, CRLF);
-    if (!r) r = functionDeclaration(b, l + 1);
+    if (!r) r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, BOOLEAN);
+    if (!r) r = consumeToken(b, NUMBER);
+    if (!r) r = consumeToken(b, IDENTIFIER);
+    if (!r) r = consumeToken(b, KEY);
+    if (!r) r = consumeToken(b, OPERATOR);
+    if (!r) r = consumeToken(b, SEMICOLON);
     exit_section_(b, m, null, r);
     return r;
   }
@@ -131,6 +126,30 @@ public class SimpleParser implements PsiParser, LightPsiParser {
       if (!empty_element_parsed_guard_(b, "simpleFile", c)) break;
     }
     return true;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER KEY OPERATOR (STRING|NUMBER|BOOLEAN) SEMICOLON
+  public static boolean var_declaration(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "var_declaration")) return false;
+    if (!nextTokenIs(b, IDENTIFIER)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, IDENTIFIER, KEY, OPERATOR);
+    r = r && var_declaration_3(b, l + 1);
+    r = r && consumeToken(b, SEMICOLON);
+    exit_section_(b, m, VAR_DECLARATION, r);
+    return r;
+  }
+
+  // STRING|NUMBER|BOOLEAN
+  private static boolean var_declaration_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "var_declaration_3")) return false;
+    boolean r;
+    r = consumeToken(b, STRING);
+    if (!r) r = consumeToken(b, NUMBER);
+    if (!r) r = consumeToken(b, BOOLEAN);
+    return r;
   }
 
 }

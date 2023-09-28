@@ -11,14 +11,14 @@ import static com.github.nurech.macrorifyplugin.language.psi.SimpleTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.nurech.macrorifyplugin.language.psi.*;
 
-public class SimpleFunctionDeclarationImpl extends ASTWrapperPsiElement implements SimpleFunctionDeclaration {
+public class SimpleVarDeclarationImpl extends ASTWrapperPsiElement implements SimpleVarDeclaration {
 
-  public SimpleFunctionDeclarationImpl(@NotNull ASTNode node) {
+  public SimpleVarDeclarationImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SimpleVisitor visitor) {
-    visitor.visitFunctionDeclaration(this);
+    visitor.visitVarDeclaration(this);
   }
 
   @Override

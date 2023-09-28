@@ -17,10 +17,10 @@
 
 simpleFile ::= item_*
 
-private item_ ::= (property|COMMENT|CRLF|functionDeclaration)
+private item_ ::= (var_declaration | property | KEYWORD | COMMENT | CRLF | STRING | BOOLEAN | NUMBER | IDENTIFIER | KEY | OPERATOR | SEMICOLON)
 
-functionDeclaration ::= FUNCTION IDENTIFIER {
-  pin=1
+var_declaration ::= IDENTIFIER KEY OPERATOR (STRING|NUMBER|BOOLEAN) SEMICOLON {
+  pin=5
 }
 
 property ::= (KEY? SEPARATOR VALUE?) | KEY {
