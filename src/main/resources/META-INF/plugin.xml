@@ -15,21 +15,21 @@
         <lang.syntaxHighlighterFactory language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleSyntaxHighlighterFactory"/>
         <iconProvider implementation="com.github.nurech.macrorifyplugin.language.SimplePropertyIconProvider"/>
         <colorSettingsPage implementation="com.github.nurech.macrorifyplugin.language.SimpleColorSettingsPage"/>
-        <annotator language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleAnnotator"/>
-        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleLineMarkerProvider"/>
-        <completion.contributor language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCompletionContributor"/>
-        <psi.referenceContributor language="JAVA" implementation="com.github.nurech.macrorifyplugin.language.SimpleReferenceContributor"/>
-        <lang.refactoringSupport language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleRefactoringSupportProvider"/>
-        <lang.findUsagesProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFindUsagesProvider"/>
-        <lang.foldingBuilder language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFoldingBuilder"/>
-        <gotoSymbolContributor implementation="com.github.nurech.macrorifyplugin.language.SimpleChooseByNameContributor"/>
         <lang.psiStructureViewFactory language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleStructureViewFactory"/>
-        <navbar implementation="com.github.nurech.macrorifyplugin.language.SimpleStructureAwareNavbar"/>
-        <lang.formatter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFormattingModelBuilder"/>
-        <codeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleCodeStyleSettingsProvider"/>
-        <langCodeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleLanguageCodeStyleSettingsProvider"/>
-        <lang.commenter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCommenter"/>
-        <lang.documentationProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleDocumentationProvider"/>
+<!--        <codeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleCodeStyleSettingsProvider"/>-->
+<!--        <langCodeStyleSettingsProvider implementation="com.github.nurech.macrorifyplugin.language.SimpleLanguageCodeStyleSettingsProvider"/>-->
+        <!--        <annotator language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleAnnotator"/>-->
+        <!--        <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleLineMarkerProvider"/>-->
+        <!--        <completion.contributor language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCompletionContributor"/>-->
+        <!--        <psi.referenceContributor language="JAVA" implementation="com.github.nurech.macrorifyplugin.language.SimpleReferenceContributor"/>-->
+        <!--        <lang.refactoringSupport language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleRefactoringSupportProvider"/>-->
+        <!--        <lang.findUsagesProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFindUsagesProvider"/>-->
+        <!--        <lang.foldingBuilder language="JAVA" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFoldingBuilder"/>-->
+        <!--        <gotoSymbolContributor implementation="com.github.nurech.macrorifyplugin.language.SimpleChooseByNameContributor"/>-->
+        <!--        <navbar implementation="com.github.nurech.macrorifyplugin.language.SimpleStructureAwareNavbar"/>-->
+        <!--        <lang.formatter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleFormattingModelBuilder"/>-->
+<!--        <lang.commenter language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleCommenter"/>-->
+<!--        <lang.documentationProvider language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleDocumentationProvider"/>-->
         <spellchecker.support language="Macrorify" implementationClass="com.github.nurech.macrorifyplugin.language.SimpleSpellcheckingStrategy"/>
     </extensions>
 

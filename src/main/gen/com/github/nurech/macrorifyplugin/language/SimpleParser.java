@@ -129,22 +129,23 @@ public class SimpleParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER KEY OPERATOR (STRING|NUMBER|BOOLEAN) SEMICOLON
+  // VARIABLE IDENTIFIER KEY OPERATOR (STRING|NUMBER|BOOLEAN) SEMICOLON
   public static boolean var_declaration(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "var_declaration")) return false;
-    if (!nextTokenIs(b, IDENTIFIER)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeTokens(b, 0, IDENTIFIER, KEY, OPERATOR);
-    r = r && var_declaration_3(b, l + 1);
+    if (!nextTokenIs(b, VARIABLE)) return false;
+    boolean r, p;
+    Marker m = enter_section_(b, l, _NONE_, VAR_DECLARATION, null);
+    r = consumeTokens(b, 0, VARIABLE, IDENTIFIER, KEY, OPERATOR);
+    r = r && var_declaration_4(b, l + 1);
+    p = r; // pin = 5
     r = r && consumeToken(b, SEMICOLON);
-    exit_section_(b, m, VAR_DECLARATION, r);
-    return r;
+    exit_section_(b, l, m, r, p, null);
+    return r || p;
   }
 
   // STRING|NUMBER|BOOLEAN
-  private static boolean var_declaration_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "var_declaration_3")) return false;
+  private static boolean var_declaration_4(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "var_declaration_4")) return false;
     boolean r;
     r = consumeToken(b, STRING);
     if (!r) r = consumeToken(b, NUMBER);

@@ -11,18 +11,22 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SimpleColorSettingsPage implements ColorSettingsPage {
+    private static final List<AttributesDescriptor> DESCRIPTOR_LIST = new ArrayList<>();
 
-    private static final AttributesDescriptor[] DESCRIPTORS = new AttributesDescriptor[]{
-            new AttributesDescriptor("Separator", SimpleSyntaxHighlighter.SEPARATOR),
-            new AttributesDescriptor("Key", SimpleSyntaxHighlighter.KEY),
-            new AttributesDescriptor("Value", SimpleSyntaxHighlighter.STRING),
-            new AttributesDescriptor("Comment", SimpleSyntaxHighlighter.COMMENT),
-            new AttributesDescriptor("Bad value", SimpleSyntaxHighlighter.BAD_CHARACTER),
-            new AttributesDescriptor("Number", SimpleSyntaxHighlighter.NUMBER),
-    };
+    // We take colors from SimpleSyntaxHighlighter dynamically. Define colors there, Settings Page will consume.
+    static {
+        for (Map.Entry<String, TextAttributesKey> entry : SimpleSyntaxHighlighter.ATTRIBUTE_MAP.entrySet()) {
+            DESCRIPTOR_LIST.add(new AttributesDescriptor(entry.getKey(), entry.getValue()));
+        }
+    }
+
+    private static final AttributesDescriptor[] DESCRIPTORS = DESCRIPTOR_LIST.toArray(new AttributesDescriptor[0]);
+
 
     @Nullable
     @Override

@@ -23,6 +23,7 @@ public interface SimpleTypes {
   IElementType SEPARATOR = new SimpleTokenType("SEPARATOR");
   IElementType STRING = new SimpleTokenType("STRING");
   IElementType VALUE = new SimpleTokenType("VALUE");
+  IElementType VARIABLE = new SimpleTokenType("VARIABLE");
 
   class Factory {
     public static PsiElement createElement(ASTNode node) {

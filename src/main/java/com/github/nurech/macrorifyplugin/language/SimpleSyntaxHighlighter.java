@@ -12,60 +12,62 @@ import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.intellij.openapi.editor.colors.TextAttributesKey.createTextAttributesKey;
 
 public class SimpleSyntaxHighlighter extends SyntaxHighlighterBase {
-  public static final TextAttributesKey SEPARATOR = createTextAttributesKey("SIMPLE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  public static final TextAttributesKey KEY = createTextAttributesKey("SIMPLE_KEY", DefaultLanguageHighlighterColors.KEYWORD);
-  public static final TextAttributesKey STRING = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING);
-  public static final TextAttributesKey COMMENT = createTextAttributesKey("SIMPLE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
-  public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
-  public static final TextAttributesKey NUMBER = createTextAttributesKey("SIMPLE_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
-  public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("SIMPLE_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
-  public static final TextAttributesKey OPERATOR = createTextAttributesKey("SIMPLE_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
-  public static final TextAttributesKey SEMICOLON = createTextAttributesKey("SIMPLE_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
 
+    public static final TextAttributesKey SEPARATOR = createTextAttributesKey("SIMPLE_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey KEY = createTextAttributesKey("SIMPLE_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey STRING = createTextAttributesKey("SIMPLE_VALUE", DefaultLanguageHighlighterColors.STRING);
+    public static final TextAttributesKey COMMENT = createTextAttributesKey("SIMPLE_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
+    public static final TextAttributesKey BAD_CHARACTER = createTextAttributesKey("SIMPLE_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
+    public static final TextAttributesKey NUMBER = createTextAttributesKey("SIMPLE_NUMBER", DefaultLanguageHighlighterColors.NUMBER);
+    public static final TextAttributesKey IDENTIFIER = createTextAttributesKey("SIMPLE_IDENTIFIER", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey VARIABLE = createTextAttributesKey("SIMPLE_VARIABLE", DefaultLanguageHighlighterColors.IDENTIFIER);
+    public static final TextAttributesKey OPERATOR = createTextAttributesKey("SIMPLE_OPERATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
+    public static final TextAttributesKey SEMICOLON = createTextAttributesKey("SIMPLE_SEMICOLON", DefaultLanguageHighlighterColors.SEMICOLON);
 
-  private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
-  private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
-  private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
-  private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{STRING};
-  private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
-  private static final TextAttributesKey[] NUMBER_KEYS = new TextAttributesKey[]{NUMBER};
-  private static final TextAttributesKey[] IDENTIFIER_KEYS = new TextAttributesKey[]{IDENTIFIER};
-  private static final TextAttributesKey[] OPERATOR_KEYS = new TextAttributesKey[]{OPERATOR};
-  private static final TextAttributesKey[] SEMICOLON_KEYS = new TextAttributesKey[]{SEMICOLON};
-  private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
+    public static final Map<String, TextAttributesKey> ATTRIBUTE_MAP = new HashMap<>();
 
-  @NotNull
-  @Override
-  public Lexer getHighlightingLexer() {
-    return new SimpleLexerAdapter();
-  }
-
-  @NotNull
-  @Override
-  public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
-    if (tokenType.equals(SimpleTypes.SEPARATOR)) {
-      return SEPARATOR_KEYS;
-    } else if (tokenType.equals(SimpleTypes.KEY) || tokenType.equals(SimpleTypes.BOOLEAN)) {
-      return KEY_KEYS;
-    } else if (tokenType.equals(SimpleTypes.VALUE)) {
-      return VALUE_KEYS;
-    } else if (tokenType.equals(SimpleTypes.COMMENT)) {
-      return COMMENT_KEYS;
-    } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
-      return BAD_CHAR_KEYS;
-    }else if (tokenType.equals(SimpleTypes.IDENTIFIER)) {
-      return IDENTIFIER_KEYS;
-    }else if (tokenType.equals(SimpleTypes.OPERATOR)) {
-      return OPERATOR_KEYS;
-    }else if (tokenType.equals(SimpleTypes.SEMICOLON)) {
-      return SEMICOLON_KEYS;
-    } else if (tokenType.equals(SimpleTypes.NUMBER)) {
-      return NUMBER_KEYS;
-    } else {
-      return EMPTY_KEYS;
+    static {
+        for (Field field : SimpleSyntaxHighlighter.class.getDeclaredFields()) {
+            try {
+                if (TextAttributesKey.class.isAssignableFrom(field.getType())) {
+                    ATTRIBUTE_MAP.put(field.getName(), (TextAttributesKey) field.get(null));
+                }
+            } catch (IllegalAccessException e) {
+                // handle exception
+            }
+        }
     }
-  }
+
+    @NotNull
+    @Override
+    public Lexer getHighlightingLexer() {
+        return new SimpleLexerAdapter();
+    }
+
+    private static final Map<IElementType, TextAttributesKey[]> TOKEN_TYPE_TO_KEY_MAP = Map.of(
+            SimpleTypes.SEPARATOR, new TextAttributesKey[]{SEPARATOR},
+            SimpleTypes.KEY, new TextAttributesKey[]{KEY},
+            SimpleTypes.VALUE, new TextAttributesKey[]{STRING},
+            SimpleTypes.COMMENT, new TextAttributesKey[]{COMMENT},
+            TokenType.BAD_CHARACTER, new TextAttributesKey[]{BAD_CHARACTER},
+            SimpleTypes.IDENTIFIER, new TextAttributesKey[]{IDENTIFIER},
+            SimpleTypes.OPERATOR, new TextAttributesKey[]{OPERATOR},
+            SimpleTypes.SEMICOLON, new TextAttributesKey[]{SEMICOLON},
+            SimpleTypes.VARIABLE, new TextAttributesKey[]{VARIABLE},
+            SimpleTypes.NUMBER, new TextAttributesKey[]{NUMBER}
+    );
+
+    @NotNull
+    @Override
+    public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
+        return TOKEN_TYPE_TO_KEY_MAP.getOrDefault(tokenType, new TextAttributesKey[0]);
+    }
 }
+
